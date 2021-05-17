@@ -18,9 +18,19 @@
     </header>
     <section id="events">
       <h2>Events in Action</h2>
-      <button v-on:click="incrementCounter">Add</button>
-      <button v-on:click="decrementCounter">Remove</button>
+      <button v-on:click="incrementCounter(5)">Add 5</button>
+      <button v-on:click.right="decrementCounter(5)">Remove 5</button>
       <p>Result: {{ counter }}</p>
+      <input
+        type="text"
+        v-on:input="onChangeText($event, 'Khan')"
+        v-on:keyup1.enter="onConfirmChange"
+      />
+      <p>Your Name: {{ confirmedName }}</p>
+      <form v-on:submit.prevent="onSubmitForm">
+        <input type="text" />
+        <button>Sign up</button>
+      </form>
     </section>
   </body>
 </html>
