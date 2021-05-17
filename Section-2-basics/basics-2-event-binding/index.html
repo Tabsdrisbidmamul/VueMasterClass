@@ -20,11 +20,12 @@
       <h2>Events in Action</h2>
       <button v-on:click="incrementCounter(5)">Add 5</button>
       <button v-on:click.right="decrementCounter(5)">Remove 5</button>
+      <p v-once>Starting counter: {{counter}}</p>
       <p>Result: {{ counter }}</p>
       <input
         type="text"
         v-on:input="onChangeText($event, 'Khan')"
-        v-on:keyup1.enter="onConfirmChange"
+        v-on:keyup.enter="onConfirmChange"
       />
       <p>Your Name: {{ confirmedName }}</p>
       <form v-on:submit.prevent="onSubmitForm">
