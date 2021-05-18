@@ -3,13 +3,31 @@ const app = Vue.createApp({
     return {
       counter: 10,
       name: '',
-      confirmedName: '',
+      lastname: '',
+      // fullname: '',
     };
   },
+  watch: {
+    counter(value) {
+      if (this.counter > 50) {
+        this.counter = 0;
+      }
+    },
+    // name(newValue, oldValue) {
+    //   this.fullname = newValue === '' ? '' : `${newValue} ${this.lastname}`;
+    // },
+    // lastname(newValue) {
+    //   this.fullname = newValue === '' ? '' : `${this.name} ${newValue}`;
+    // },
+  },
   computed: {
+    counterCompute() {
+      return this.counter < 50 ? this.counter : (this.counter = 0);
+    },
     fullname() {
-      console.log('Running again...');
-      return this.name === '' ? '' : `${this.name} Khan`;
+      return this.name === '' || this.lastname === ''
+        ? ''
+        : `${this.name} ${this.lastname}`;
     },
   },
   methods: {
@@ -19,7 +37,7 @@ const app = Vue.createApp({
     decrementCounter(value) {
       this.counter -= value;
     },
-    onChangeText(event, lastName) {
+    onChangeText(event) {
       this.name = `${event.target.value} ${lastName}`;
     },
     onSubmitForm() {
@@ -30,6 +48,7 @@ const app = Vue.createApp({
     },
     onResetInput() {
       this.name = '';
+      this.lastname = '';
     },
     outputFullName() {
       return this.name === '' ? '' : `${this.name} Khan`;
