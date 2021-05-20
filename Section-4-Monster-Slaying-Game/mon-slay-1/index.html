@@ -19,25 +19,47 @@
     <div id="game">
       <section id="monster" class="container">
         <h2>Monster Health</h2>
+        <span :style="healthBarNumber" class="log--monster">
+          {{ monsterHealth }}%
+        </span>
         <div class="healthbar">
-          <div class="healthbar__value"></div>
+          <div :style="monsterHealthBarStyle" class="healthbar__value"></div>
         </div>
       </section>
       <section id="player" class="container">
         <h2>Your Health</h2>
+        <span :style="healthBarNumber" class="log--player">
+          {{ playerHealth }}%
+        </span>
         <div class="healthbar">
-          <div class="healthbar__value"></div>
+          <div :style="playerHealthBarStyle" class="healthbar__value"></div>
         </div>
       </section>
       <section id="controls">
-        <button>ATTACK</button>
-        <button>SPECIAL ATTACK</button>
-        <button>HEAL</button>
+        <button @click="attackMonster(3, 8)">ATTACK</button>
+        <button @click="specialAttack" :disabled="isSpecialAttackAvailable">
+          SPECIAL ATTACK
+        </button>
+        <button @click="heal" :disabled="isHealAvailable">HEAL</button>
         <button>SURRENDER</button>
       </section>
       <section id="log" class="container">
         <h2>Battle Log</h2>
-        <ul></ul>
+        <ul>
+          <li v-for="value in log">
+            <span :class="renderName(value.name)">{{ value.name }} </span>
+
+            <span v-if="'damage' in value">
+              dealt
+              <span :class="renderDamageClass">{{ value.damage }}</span> damage
+            </span>
+
+            <span v-else-if="'heal' in value">
+              healed
+              <span :class="renderHealthClass">{{ value.heal }}</span> health
+            </span>
+          </li>
+        </ul>
       </section>
     </div>
   </body>
