@@ -21,3 +21,6 @@ Here we are wrapping all the skills we have gained so far to implement a basic c
 
 ## Section-5-Behind-the-scenes
 This section is monstly theoretical, where we go into how the Vue framework actually renders, keeps track of data and its lifecycle and lifecycle hooks available to us
+
+## Section-6-Components
+Here we go over Vue's interpretation of components
