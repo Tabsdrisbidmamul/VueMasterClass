@@ -35,28 +35,53 @@
           <div :style="playerHealthBarStyle" class="healthbar__value"></div>
         </div>
       </section>
+
+      <section v-show="winner" class="container">
+        <h2>Game Over!</h2>
+        <h3 v-if="winner === 'monster'">You Lost!</h3>
+        <h3 v-else-if="winner === 'player'">You Won!</h3>
+        <h3 v-else>It's a Draw!</h3>
+        <button @click="restart">PLAY AGAIN!</button>
+      </section>
+
       <section id="controls">
-        <button @click="attackMonster(3, 8)">ATTACK</button>
-        <button @click="specialAttack" :disabled="isSpecialAttackAvailable">
+        <button @click="attackMonster(3, 8)" :disabled="winner">ATTACK</button>
+        <button
+          @click="specialAttack"
+          :disabled="isSpecialAttackAvailable || winner"
+        >
           SPECIAL ATTACK
         </button>
-        <button @click="heal" :disabled="isHealAvailable">HEAL</button>
-        <button>SURRENDER</button>
+        <button @click="heal" :disabled="isHealAvailable || winner">
+          HEAL
+        </button>
+        <button @click="gameLost" :disabled="winner">SURRENDER</button>
       </section>
+
       <section id="log" class="container">
         <h2>Battle Log</h2>
         <ul>
           <li v-for="value in log">
-            <span :class="renderName(value.name)">{{ value.name }} </span>
-
-            <span v-if="'damage' in value">
-              dealt
-              <span :class="renderDamageClass">{{ value.damage }}</span> damage
+            <span :class="`log--${value.playerType}`"
+              >{{ value.playerType }}
             </span>
 
-            <span v-else-if="'heal' in value">
-              healed
-              <span :class="renderHealthClass">{{ value.heal }}</span> health
+            <span v-if="value.action === 'damage'">
+              dealt
+              <span class="log--damage">{{ value.value }}</span> damage to
+              <span :class="`log--${value.opponentType}`">
+                {{ value.opponentType }}</span
+              >
+            </span>
+
+            <span v-else-if="value.action === 'heal'">
+              heals themselves for
+              <span class="log--heal">{{ value.value }}</span> health
+            </span>
+
+            <span v-else>
+              has surrendered to the
+              <span class="log--monster">monster</span>
             </span>
           </li>
         </ul>

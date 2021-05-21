@@ -4,6 +4,7 @@ const app = Vue.createApp({
       playerHealth: 100,
       monsterHealth: 100,
       currentRound: 0,
+      winner: null,
       log: [],
     };
   },
@@ -17,12 +18,6 @@ const app = Vue.createApp({
     healthBarNumber() {
       return { display: 'flex', justifyContent: 'flex-end' };
     },
-    renderDamageClass() {
-      return 'log--damage';
-    },
-    renderHealthClass() {
-      return 'log--heal';
-    },
     isSpecialAttackAvailable() {
       return this.hasCurrentRoundPassed();
     },
@@ -30,17 +25,36 @@ const app = Vue.createApp({
       return this.hasCurrentRoundPassed();
     },
   },
-  watch: {},
+  watch: {
+    playerHealth(value) {
+      if (value <= 0 && this.monsterHealth <= 0) {
+        // draw
+        this.winner = 'draw';
+      } else if (value <= 0) {
+        // lost
+        this.winner = 'monster';
+      }
+    },
+    monsterHealth(value) {
+      if (value <= 0 && this.playerHealth <= 0) {
+        // draw
+        this.winner = 'draw';
+      } else if (value <= 0) {
+        // lost
+        this.winner = 'player';
+      }
+    },
+  },
   methods: {
     attack(playerType, min, max, opponentType) {
       let attackValue = getRandomValue(min, max);
 
       if (this[`${opponentType}Health`] - attackValue < 0) {
-        attackValue = playerHealth;
+        attackValue = this[`${opponentType}Health`];
       }
 
       this[`${opponentType}Health`] -= attackValue;
-      this.log.push({ damage: attackValue, name: playerType });
+      this.addLogMessage(playerType, 'damage', attackValue, opponentType);
 
       if (playerType === 'player') {
         this.currentRound++;
@@ -69,16 +83,29 @@ const app = Vue.createApp({
 
       this.playerHealth += healValue;
       this.currentRound++;
-      this.log.push({ heal: healValue, name: 'player' });
+      this.addLogMessage('player', 'heal', healValue);
       this.attackPlayer(5, 10);
     },
 
-    renderName(name) {
-      return name === 'player' ? 'log--player' : 'log--monster';
+    addLogMessage(playerType, action, value, opponentType) {
+      this.log.unshift({ playerType, action, value, opponentType });
     },
 
     hasCurrentRoundPassed() {
       return this.currentRound % 3 !== 0;
+    },
+
+    restart() {
+      this.playerHealth = 100;
+      this.monsterHealth = 100;
+      this.currentRound = 0;
+      this.winner = null;
+      this.log = [];
+    },
+
+    gameLost() {
+      this.addLogMessage('player', 'surrender', 0, 'monster');
+      this.winner = 'monster';
     },
   },
 });
