@@ -24,3 +24,6 @@ This section is monstly theoretical, where we go into how the Vue framework actu
 
 ## Section-6-Components
 Here we go over Vue's interpretation of components
+
+## Section-7-Vue-CLI-and-More-Components
+We install the Vue-CLI and prepare a proper dev server to create our Vue apps on
