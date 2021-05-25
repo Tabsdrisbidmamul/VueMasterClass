@@ -27,3 +27,7 @@ Here we go over Vue's interpretation of components
 
 ## Section-7-Vue-CLI-and-More-Components
 We install the Vue-CLI and prepare a proper dev server to create our Vue apps on
+
+## Section-8-Component-Communiaction
+We delve further into components, and learn how to pass data among components through props etc.
+
