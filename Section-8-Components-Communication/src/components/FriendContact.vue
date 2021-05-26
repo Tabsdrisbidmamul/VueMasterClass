@@ -1,7 +1,7 @@
 <template>
   <li>
     <h2>{{ name }} {{ isFavorite ? '(Favourite)' : '' }}</h2>
-    <div>
+    <div class="btn-container btn-containter--details">
       <button @click="toggleDetails">
         {{ detailsAreVisible ? 'Hide' : 'Show' }} Details
       </button>
@@ -9,16 +9,19 @@
         Mark as Favorite Friend
       </button>
     </div>
-    <ul v-if="detailsAreVisible">
-      <li>
-        <strong>Phone:</strong>
-        {{ phoneNumber }}
-      </li>
-      <li>
-        <strong>Email:</strong>
-        {{ emailAddress }}
-      </li>
-    </ul>
+    <div class="contact-details" v-if="detailsAreVisible">
+      <ul>
+        <li>
+          <strong>Phone:</strong>
+          {{ phoneNumber }}
+        </li>
+        <li>
+          <strong>Email:</strong>
+          {{ emailAddress }}
+        </li>
+      </ul>
+      <button @click="$emit('delete-friend', id)">Delete Contact</button>
+    </div>
   </li>
 </template>
 
@@ -58,6 +61,13 @@ export default {
         return false;
       }
     },
+    'delete-friend': function(id) {
+      if (id) return true;
+      else {
+        console.warn('emit validation failed, id is missing');
+        return false;
+      }
+    },
   },
   data() {
     return {
@@ -65,12 +75,22 @@ export default {
     };
   },
   methods: {
+    emitIdValidator(id) {
+      if (id) return true;
+      else {
+        console.warn('emit validation failed, id is missing');
+        return false;
+      }
+    },
     toggleDetails() {
       this.detailsAreVisible = !this.detailsAreVisible;
     },
     toggleFavoriteFriend() {
       this.$emit('toggle-favorite', this.id);
     },
+    // deleteFriend() {
+    //   this.$emit('delete-friend', this.id);
+    // },
   },
 };
 </script>
