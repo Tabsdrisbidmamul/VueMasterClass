@@ -21,7 +21,7 @@ export default {
     newContact() {
       this.$emit('new-contact', {
         name: this.enteredName,
-        age: this.enteredAge,
+        age: parseInt(this.enteredAge),
       });
     },
   },

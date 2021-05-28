@@ -24,7 +24,7 @@ export default {
     return {
       activeUser: {
         name: '',
-        age: '0',
+        age: 0,
       },
     };
   },
@@ -59,6 +59,7 @@ body {
   display: flex;
   justify-content: center;
   background-color: #27ae60;
+  padding: 1rem;
   box-shadow: 0.25rem 0 0.5rem rgba(0, 0, 0, 0.25);
 }
 
