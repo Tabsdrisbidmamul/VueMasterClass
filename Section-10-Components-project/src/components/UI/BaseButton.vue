@@ -22,6 +22,17 @@ export default {
   cursor: pointer;
 }
 
+.btn--save {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.btn--save:active,
+.btn--save:hover {
+  background-color: #27ae60;
+  color: white;
+}
+
 .btn--tabs {
   background-color: #3498db;
   margin-right: 2rem;

@@ -22,6 +22,14 @@ export default {
   padding: 2rem;
 }
 
+.card--form {
+  display: flex;
+  flex-direction: column;
+  max-width: 50rem;
+  margin: auto;
+  padding: 2rem;
+}
+
 .card--tabs {
   display: flex;
   justify-content: center;

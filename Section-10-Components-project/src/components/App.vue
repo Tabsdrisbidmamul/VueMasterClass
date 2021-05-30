@@ -17,11 +17,7 @@ export default {
       title: 'Learning Resources'
     };
   },
-  methods: {
-    deleteResource(id) {
-      this.storedResources = this.storedResources.filter(res => res.id !== id);
-    }
-  }
+  methods: {}
 };
 </script>
 

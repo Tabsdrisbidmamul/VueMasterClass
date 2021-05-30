@@ -29,7 +29,8 @@ export default {
   provide() {
     return {
       storedResources: this.storedResources,
-      deleteResource: this.deleteResource
+      deleteResource: this.deleteResource,
+      addResource: this.addResource
     };
   },
   data() {
@@ -54,6 +55,14 @@ export default {
   methods: {
     setSelectedTab(cmp) {
       this.selectedTab = cmp;
+    },
+    addResource(resource) {
+      console.log(resource);
+      this.storedResources.push(resource);
+    },
+    deleteResource(id) {
+      this.storedResources = this.storedResources.filter(res => res.id !== id);
+      console.log(this.$data.storedResources);
     }
   },
   computed: {
