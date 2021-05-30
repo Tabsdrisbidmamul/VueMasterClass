@@ -1,10 +1,12 @@
 <template>
-  <button :class="`btn btn--${type}`"><slot></slot></button>
+  <button :class="`btn btn--${type} ${active}`">
+    <slot></slot>
+  </button>
 </template>
 
 <script>
 export default {
-  props: ['type', 'content']
+  props: ['type', 'active']
 };
 </script>
 
@@ -40,5 +42,11 @@ export default {
 .btn--delete:hover {
   background-color: #c0392b;
   box-shadow: 0.1rem 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+.not-active {
+  background-color: transparent;
+  color: rgba(0, 0, 0, 0.87);
+  box-shadow: 0 0 0 0;
 }
 </style>

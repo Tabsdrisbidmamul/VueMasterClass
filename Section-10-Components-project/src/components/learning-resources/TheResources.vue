@@ -1,9 +1,15 @@
 <template>
   <base-card type="tabs">
-    <base-button type="tabs" @click="setSelectedTab('stored-resources')"
+    <base-button
+      type="tabs"
+      :active="activeResouceBtn"
+      @click="setSelectedTab('stored-resources')"
       >All Resoucres</base-button
     >
-    <base-button type="tabs" @click="setSelectedTab('add-resources')"
+    <base-button
+      type="tabs"
+      :active="activeAddResouceBtn"
+      @click="setSelectedTab('add-resources')"
       >Add Resource</base-button
     >
   </base-card>
@@ -48,6 +54,14 @@ export default {
   methods: {
     setSelectedTab(cmp) {
       this.selectedTab = cmp;
+    }
+  },
+  computed: {
+    activeResouceBtn() {
+      return this.selectedTab === 'stored-resources' ? null : 'not-active';
+    },
+    activeAddResouceBtn() {
+      return this.selectedTab === 'add-resources' ? null : 'not-active';
     }
   }
 };
