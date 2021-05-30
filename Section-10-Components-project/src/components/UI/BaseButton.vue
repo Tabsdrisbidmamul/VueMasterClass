@@ -17,9 +17,8 @@ export default {
   text-transform: uppercase;
   border-radius: 3px;
   color: rgba(255, 255, 255, 0.8);
-  background-color: #e74c3c;
   box-shadow: 0.05rem 0.1rem 0.25rem rgba(0, 0, 0, 0.2);
-  transition: background-color 200ms;
+  transition: all 200ms;
   cursor: pointer;
 }
 
@@ -30,6 +29,7 @@ export default {
 
 .btn--tabs:active,
 .btn--tabs:hover {
+  color: rgba(255, 255, 255, 0.8);
   background-color: #2980b9;
 }
 
