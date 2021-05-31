@@ -37,3 +37,8 @@ We look at slots, slot props and generalising the components even further. We al
 ## Section-10-Components-Project
 This project is where we use all the features we have learned thus far and implement them into a simple learning resources web application
 
+
+## Section-11-Forms
+We have looked into how we can retrieve values from form inputs, and we also looked at how we can make custom form inputs and styling them as well.
+
+
