@@ -31,3 +31,9 @@ We install the Vue-CLI and prepare a proper dev server to create our Vue apps on
 ## Section-8-Component-Communiaction
 We delve further into components, and learn how to pass data among components through props etc.
 
+## Section-9-Advacned-Components
+We look at slots, slot props and generalising the components even further. We also look at teleporting components, and dynamic components with the keep-alive element
+
+## Section-10-Components-Project
+This project is where we use all the features we have learned thus far and implement them into a simple learning resources web application
+
