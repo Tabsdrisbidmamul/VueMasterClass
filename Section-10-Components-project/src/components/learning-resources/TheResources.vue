@@ -57,12 +57,12 @@ export default {
       this.selectedTab = cmp;
     },
     addResource(resource) {
-      console.log(resource);
-      this.storedResources.push(resource);
+      this.storedResources.unshift(resource);
+      this.selectedTab = 'stored-resources';
     },
     deleteResource(id) {
-      this.storedResources = this.storedResources.filter(res => res.id !== id);
-      console.log(this.$data.storedResources);
+      const resId = this.storedResources.findIndex(res => res.id === id);
+      this.storedResources.splice(resId, 1);
     }
   },
   computed: {

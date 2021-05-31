@@ -27,6 +27,17 @@ export default {
   color: white;
 }
 
+.btn--close {
+  background-color: #e67e22;
+  color: white;
+}
+
+.btn--close:active,
+.btn--close:hover {
+  background-color: #d35400;
+  color: white;
+}
+
 .btn--save:active,
 .btn--save:hover {
   background-color: #27ae60;

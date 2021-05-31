@@ -34,5 +34,6 @@ body {
   font-size: 62.5%;
   font-family: 'Noto Sans JP', sans-serif;
   font-weight: 400;
+  position: relative;
 }
 </style>
