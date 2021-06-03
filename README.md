@@ -43,4 +43,9 @@ We have looked into how we can retrieve values from form inputs, and we also loo
 ## Section-12-HTTP-Requests
 Here we go over to http requests using axis/ fetch methods. Nothing really Vue related but good to go refresh and go over
 
+## Section-13-Routing
+In this section we go over the vue-router, which lets us to navigate around the SPA, whilst also maintaining the integrity of the URL for the users viewing the web appliaction
+
+## Section-14-Animations
+We look at how we can animate various parts of the application with CSS animations
 
