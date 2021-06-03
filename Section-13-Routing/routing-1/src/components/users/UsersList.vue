@@ -1,6 +1,7 @@
 <template>
   <div>
     <button @click="confirmInput">Confirm</button>
+    <button @click="saveChanges">Save Changes</button>
   </div>
   <ul>
     <user-item
@@ -20,9 +21,35 @@ export default {
     UserItem
   },
   inject: ['users'],
+  data() {
+    return {
+      savedChanges: false
+    };
+  },
   methods: {
     confirmInput() {
       this.$router.push('/teams');
+    },
+    saveChanges() {
+      this.saveChanges = true;
+    }
+  },
+  beforeRouteEnter(to, from, next) {
+    console.log('UserList cmp beforeRouteEnter');
+    console.log(to, from);
+    next();
+  },
+  beforeRouteLeave(to, from, next) {
+    console.log('UserList cmp beforeRouteLeave');
+    console.log(to, from);
+
+    if (this.saveChanges) {
+      next();
+    } else {
+      const userWantsToLeave = confirm(
+        'Are you sure? You have unsaved changes'
+      );
+      next(userWantsToLeave);
     }
   }
 };
@@ -40,6 +67,8 @@ div {
   margin: 2rem auto;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
 button {
@@ -54,6 +83,7 @@ button {
   border-radius: 3px;
   box-shadow: 0 1rem 2rem rgba(#000, 0.2);
   transition: all 200ms;
+  margin-bottom: 1rem;
 }
 
 button:hover,

@@ -42,11 +42,15 @@ export default {
 
       this.members = selcetedMembers;
       this.teamName = selectedTeam.name;
-      console.log(selcetedMembers);
     }
   },
   created() {
     this.loadTeamMembers(this.teamId);
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log('TeamMembers cmp beforeRouteUpdate');
+    console.log(to, from);
+    next();
   },
   watch: {
     teamId(newId) {
