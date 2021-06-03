@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import UserItem from './UserItem.vue';
+import UserItem from '../components/users/UserItem.vue';
 
 export default {
   components: {
@@ -23,7 +23,7 @@ export default {
   inject: ['users'],
   data() {
     return {
-      savedChanges: false
+      changesSaved: false
     };
   },
   methods: {
@@ -31,7 +31,7 @@ export default {
       this.$router.push('/teams');
     },
     saveChanges() {
-      this.saveChanges = true;
+      this.changesSaved = true;
     }
   },
   beforeRouteEnter(to, from, next) {
@@ -43,7 +43,7 @@ export default {
     console.log('UserList cmp beforeRouteLeave');
     console.log(to, from);
 
-    if (this.saveChanges) {
+    if (this.changesSaved) {
       next();
     } else {
       const userWantsToLeave = confirm(
