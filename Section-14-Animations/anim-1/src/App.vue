@@ -3,10 +3,28 @@
     <div class="block" :class="{ animate: animatedBlock }"></div>
     <button @click="animateBlock">Animate</button>
   </div>
-  <base-modal @close="hideDialog" v-if="dialogIsVisible">
+
+  <div class="container">
+    <transition name="para">
+      <p v-if="paragraphIsVisible">I'm a paragraph</p>
+    </transition>
+    <button @click="toggleParagraph">
+      Toggle Paragraph
+    </button>
+  </div>
+
+  <div class="container">
+    <transition name="fade-button" mode="out-in">
+      <button @click="showUsers" v-if="!usersAreVisible">Show Users</button>
+      <button @click="hideUsers" v-else>Hide Users</button>
+    </transition>
+  </div>
+
+  <base-modal @close="hideDialog" :open="dialogIsVisible">
     <p>This is a test dialog!</p>
     <button @click="hideDialog">Close it!</button>
   </base-modal>
+
   <div class="container">
     <button @click="showDialog">Show Dialog</button>
   </div>
@@ -17,7 +35,9 @@ export default {
   data() {
     return {
       dialogIsVisible: false,
-      animatedBlock: false
+      animatedBlock: false,
+      paragraphIsVisible: false,
+      usersAreVisible: false
     };
   },
   methods: {
@@ -29,6 +49,15 @@ export default {
     },
     hideDialog() {
       this.dialogIsVisible = false;
+    },
+    toggleParagraph() {
+      this.paragraphIsVisible = !this.paragraphIsVisible;
+    },
+    showUsers() {
+      this.usersAreVisible = true;
+    },
+    hideUsers() {
+      this.usersAreVisible = false;
     }
   }
 };
@@ -63,7 +92,7 @@ button:active {
   height: 8rem;
   background-color: #290033;
   margin-bottom: 2rem;
-  transition: all 200ms;
+  /* transition: all 200ms; */
 }
 .container {
   max-width: 40rem;
@@ -78,6 +107,68 @@ button:active {
 }
 
 .animate {
-  transform: translateX(-150px);
+  animation: slide-scale 300ms ease-out forwards;
+}
+
+.para-enter-from {
+  /* opacity: 0;
+  transform: translateY(-30px); */
+}
+
+.para-enter-active {
+  /* transition: all 300ms ease-out; */
+  animation: slide-scale 300ms ease-out;
+}
+
+.para-enter-to {
+  /* opacity: 1;
+  transform: translateY(0); */
+}
+
+.para-leave-from {
+  /* opacity: 1;
+  transform: translateY(0); */
+}
+
+.para-leave-active {
+  /* transition: all 300ms ease-in; */
+  animation: slide-scale 300ms ease-out;
+}
+
+.para-leave-to {
+  /* opacity: 1;
+  transform: translateY(30px); */
+}
+
+.fade-button-enter-from,
+.fade-button-leave-from {
+  opacity: 0;
+}
+
+.fade-button-enter-active {
+  transition: opacity 200ms ease-out;
+}
+
+.fade-button-leave-active {
+  transition: opacity 200ms ease-in;
+}
+
+.fade-button-enter-to,
+.fade-button-leave-to {
+  opacity: 1;
+}
+
+@keyframes slide-scale {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+
+  70% {
+    transform: translateX(-120px) scale(1.1);
+  }
+
+  100% {
+    transform: translateX(-150px) scale(1);
+  }
 }
 </style>
