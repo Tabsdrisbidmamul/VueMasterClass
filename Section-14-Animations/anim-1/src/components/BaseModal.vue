@@ -52,6 +52,7 @@ dialog {
   from {
     opacity: 0;
     transform: translateY(-50px) scale(0.9);
+    box-shadow: 0;
   }
 
   to {
