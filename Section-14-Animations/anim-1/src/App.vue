@@ -5,7 +5,15 @@
   </div>
 
   <div class="container">
-    <transition name="para">
+    <transition
+      name="para"
+      @before-enter="beforeEnter"
+      @enter="enter"
+      @after-enter="afterEnter"
+      @before-leave="beforeLeave"
+      @leave="leave"
+      @after-leave="afterLeave"
+    >
       <p v-if="paragraphIsVisible">I'm a paragraph</p>
     </transition>
     <button @click="toggleParagraph">
@@ -41,6 +49,30 @@ export default {
     };
   },
   methods: {
+    leave(el) {
+      console.log('leave');
+      console.log(el);
+    },
+    afterLeave(el) {
+      console.log('afterLeave');
+      console.log(el);
+    },
+    afterEnter(el) {
+      console.log('afterEnter');
+      console.log(el);
+    },
+    enter(el) {
+      console.log('enter');
+      console.log(el);
+    },
+    beforeLeave(el) {
+      console.log('beforeLeave');
+      console.log(el);
+    },
+    beforeEnter(el) {
+      console.log('beforeEnter');
+      console.log(el);
+    },
     animateBlock() {
       this.animatedBlock = true;
     },
@@ -110,36 +142,6 @@ button:active {
   animation: slide-scale 300ms ease-out forwards;
 }
 
-.para-enter-from {
-  /* opacity: 0;
-  transform: translateY(-30px); */
-}
-
-.para-enter-active {
-  /* transition: all 300ms ease-out; */
-  animation: slide-scale 300ms ease-out;
-}
-
-.para-enter-to {
-  /* opacity: 1;
-  transform: translateY(0); */
-}
-
-.para-leave-from {
-  /* opacity: 1;
-  transform: translateY(0); */
-}
-
-.para-leave-active {
-  /* transition: all 300ms ease-in; */
-  animation: slide-scale 300ms ease-out;
-}
-
-.para-leave-to {
-  /* opacity: 1;
-  transform: translateY(30px); */
-}
-
 .fade-button-enter-from,
 .fade-button-leave-from {
   opacity: 0;
@@ -169,6 +171,18 @@ button:active {
 
   100% {
     transform: translateX(-150px) scale(1);
+  }
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
   }
 }
 </style>
