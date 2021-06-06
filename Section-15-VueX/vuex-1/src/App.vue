@@ -1,23 +1,46 @@
 <template>
-  <base-container title="Vuex">
+  <base-container title="Vuex" v-if="isAuth !== null">
     <the-counter></the-counter>
-    <button @click="addOne">Add 1</button>
+    <button @click="inc">Add 1</button>
+    <button @click="increaseByVal({ value: 5 })">Add 5</button>
+  </base-container>
+  <base-container title="Auth">
+    <user-auth></user-auth>
   </base-container>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 import BaseContainer from './components/BaseContainer.vue';
 import TheCounter from './components/TheCounter.vue';
+import UserAuth from './components/UserAuth.vue';
 
 export default {
   components: {
     BaseContainer,
-    TheCounter
+    TheCounter,
+    UserAuth
+  },
+  computed: {
+    ...mapGetters(['isAuth'])
   },
   methods: {
-    addOne() {
-      this.$store.state.counter++;
-    }
+    // addOne() {
+    //   this.$store.dispatch('increment');
+    // },
+    // addByValue(value) {
+    //   // this.$store.commit('incrementByValue', { value });
+    //   this.$store.dispatch({
+    //     type: 'incrementByValue',
+    //     value
+    //   });
+    // },
+    // ...mapActions(['increment', 'incrementByValue'])
+    ...mapActions({
+      inc: 'increment',
+      increaseByVal: 'incrementByValue'
+    })
   }
 };
 </script>
