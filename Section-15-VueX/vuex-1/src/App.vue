@@ -23,7 +23,7 @@ export default {
     UserAuth
   },
   computed: {
-    ...mapGetters(['isAuth'])
+    ...mapGetters('authModule', ['isAuth'])
   },
   methods: {
     // addOne() {
@@ -37,7 +37,7 @@ export default {
     //   });
     // },
     // ...mapActions(['increment', 'incrementByValue'])
-    ...mapActions({
+    ...mapActions('counterModule', {
       inc: 'increment',
       increaseByVal: 'incrementByValue'
     })

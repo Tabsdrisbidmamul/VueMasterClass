@@ -8,10 +8,10 @@ import { mapActions, mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['isAuth'])
+    ...mapGetters('authModule', ['isAuth'])
   },
   methods: {
-    ...mapActions(['login', 'logout'])
+    ...mapActions('authModule', ['login', 'logout'])
   }
 };
 </script>
