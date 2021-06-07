@@ -32,7 +32,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions({
+    ...mapActions('cartModule', {
       remove: 'removeProductFromCart'
     })
   }

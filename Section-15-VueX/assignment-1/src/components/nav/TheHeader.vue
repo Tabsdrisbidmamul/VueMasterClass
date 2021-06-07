@@ -29,10 +29,11 @@ import { mapGetters, mapActions } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters(['isAuth', 'getCartQuantity'])
+    ...mapGetters('authModule', ['isAuth']),
+    ...mapGetters('cartModule', ['getCartQuantity'])
   },
   methods: {
-    ...mapActions(['login', 'logout'])
+    ...mapActions('authModule', ['login', 'logout'])
   }
 };
 </script>

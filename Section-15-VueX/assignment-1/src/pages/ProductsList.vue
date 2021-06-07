@@ -24,7 +24,7 @@ export default {
     ProductItem
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters('productsModule', {
       products: 'getProducts'
     })
   }

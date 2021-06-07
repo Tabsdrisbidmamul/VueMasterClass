@@ -3,15 +3,12 @@ export default {
     return state.cart;
   },
   getCartQuantity(_, getters) {
-    const cart = getters.getCart;
-    return cart.qty;
+    return getters.getCart.qty;
   },
   getCartItems(_, getters) {
-    const cart = getters.getCart;
-    return cart.items;
+    return getters.getCart.items;
   },
   getCartTotal(_, getters) {
-    const cart = getters.getCart;
-    return cart.total.toFixed(2);
+    return getters.getCart.total.toFixed(2);
   }
 };

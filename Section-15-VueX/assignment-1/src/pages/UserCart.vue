@@ -28,7 +28,7 @@ export default {
     CartItem
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters('cartModule', {
       cartTotal: 'getCartTotal',
       cartItems: 'getCartItems'
     })

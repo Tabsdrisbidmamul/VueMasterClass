@@ -37,7 +37,7 @@ import { mapActions } from 'vuex';
 export default {
   props: ['id', 'image', 'title', 'price', 'description'],
   methods: {
-    ...mapActions({
+    ...mapActions('cartModule', {
       addToCart: 'addProductToCart'
     })
   }
