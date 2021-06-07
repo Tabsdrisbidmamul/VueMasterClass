@@ -13,18 +13,7 @@
       </div>
     </div>
     <div class="product__actions">
-      <button
-        @click="
-          addToCart({
-            productData: {
-              id,
-              image,
-              title,
-              price
-            }
-          })
-        "
-      >
+      <button @click="addToCart({ prodId: id })">
         Add to Cart
       </button>
     </div>
