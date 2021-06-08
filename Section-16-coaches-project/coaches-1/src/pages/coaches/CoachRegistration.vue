@@ -14,7 +14,8 @@ export default {
   },
   methods: {
     saveData(formData) {
-      this.$store.dispatch('registerCoach', formData);
+      this.$store.dispatch('coaches/registerCoach', formData);
+      this.$router.replace('/coaches');
     }
   }
 };
