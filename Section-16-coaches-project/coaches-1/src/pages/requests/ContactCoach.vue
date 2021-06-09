@@ -1,23 +1,31 @@
 <template>
-  <form @submit.prevent="submitForm">
-    <div class="form-control">
-      <label for="email">Your E-mail</label>
-      <input type="email" id="email" v-model.trim="email" />
+  <section>
+    <base-dialog :show="!!error" title="An Error Occurred" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <div v-if="isLoading">
+      <base-spinner></base-spinner>
     </div>
+    <form v-else-if="!isLoading" @submit.prevent="submitForm">
+      <div class="form-control">
+        <label for="email">Your E-mail</label>
+        <input type="email" id="email" v-model.trim="email" />
+      </div>
 
-    <div class="form-control">
-      <label for="message">Message</label>
-      <textarea rows="5" id="message" v-model.trim="message"></textarea>
-    </div>
+      <div class="form-control">
+        <label for="message">Message</label>
+        <textarea rows="5" id="message" v-model.trim="message"></textarea>
+      </div>
 
-    <p class="errors" v-if="!formIsInvalid">
-      Please ensure that message and email are correctly filled in
-    </p>
+      <p class="errors" v-if="!formIsInvalid">
+        Please ensure that message and email are correctly filled in
+      </p>
 
-    <div class="actions">
-      <base-button>Send message</base-button>
-    </div>
-  </form>
+      <div class="actions">
+        <base-button>Send message</base-button>
+      </div>
+    </form>
+  </section>
 </template>
 
 <script>
@@ -26,11 +34,13 @@ export default {
     return {
       email: '',
       message: '',
-      formIsInvalid: true
+      formIsInvalid: true,
+      isLoading: false,
+      error: null
     };
   },
   methods: {
-    submitForm() {
+    async submitForm() {
       this.formIsInvalid = true;
       if (
         !this.email.includes('@') ||
@@ -47,8 +57,19 @@ export default {
         message: this.message
       };
 
-      this.$store.dispatch('requests/contactCoach', coachRequest);
-      this.$router.replace('/coaches');
+      this.isLoading = true;
+
+      try {
+        await this.$store.dispatch('requests/contactCoach', coachRequest);
+        this.isLoading = false;
+        this.$router.replace('/coaches');
+      } catch (error) {
+        this.isLoading = false;
+        this.error = `${error.message} 🙈` || 'Something went wrong 🙈';
+      }
+    },
+    handleError() {
+      this.error = null;
     }
   }
 };

@@ -1,28 +1,38 @@
 <template>
   <section>
-    <coaches-filter @change-filter="setFilters"></coaches-filter>
-  </section>
-  <section>
-    <base-card>
-      <div class="controls">
-        <base-button mode="outline">Refresh</base-button>
-        <base-button link to="/register" v-if="!isCoach" @click="loadCoaches"
-          >Register as a Coach</base-button
-        >
-      </div>
-      <ul v-if="hasCoaches">
-        <coach-item
-          v-for="coach in filteredCoaches"
-          :key="coach.id"
-          :id="coach.id"
-          :first-name="coach.firstName"
-          :last-name="coach.lastName"
-          :rate="coach.hourlyRate"
-          :areas="coach.areas"
-        ></coach-item>
-      </ul>
-      <h3 v-else>No coaches found</h3>
-    </base-card>
+    <base-dialog :show="!!error" title="An error occurred" @close="handleError">
+      <p>{{ error }}</p>
+    </base-dialog>
+    <section>
+      <coaches-filter @change-filter="setFilters"></coaches-filter>
+    </section>
+    <section>
+      <base-card>
+        <div class="controls">
+          <base-button @click="loadCoaches(true)" mode="outline"
+            >Refresh</base-button
+          >
+          <base-button link to="/register" v-if="!isCoach && !isLoading"
+            >Register as a Coach</base-button
+          >
+        </div>
+        <div v-if="isLoading">
+          <base-spinner></base-spinner>
+        </div>
+        <ul v-else-if="!isLoading && hasCoaches">
+          <coach-item
+            v-for="coach in filteredCoaches"
+            :key="coach.id"
+            :id="coach.id"
+            :first-name="coach.firstName"
+            :last-name="coach.lastName"
+            :rate="coach.hourlyRate"
+            :areas="coach.areas"
+          ></coach-item>
+        </ul>
+        <h3 v-else>No coaches found</h3>
+      </base-card>
+    </section>
   </section>
 </template>
 
@@ -38,6 +48,8 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
+      error: null,
       activeFilters: {
         frontend: true,
         backend: true,
@@ -66,12 +78,22 @@ export default {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
     },
-    loadCoaches() {
-      this.$store.dispatch('coaches/loadCoaches');
+    async loadCoaches(forceRefresh = false) {
+      this.isLoading = true;
+      try {
+        await this.$store.dispatch('coaches/loadCoaches', { forceRefresh });
+      } catch (error) {
+        this.isLoading = false;
+        this.error = `${error.message} 🙈` || 'Something went wrong 🙈';
+      }
+      this.isLoading = false;
+    },
+    handleError() {
+      this.error = null;
     }
   },
   created() {
-    this.loadCoaches();
+    this.loadCoaches(false);
   }
 };
 </script>
@@ -86,5 +108,16 @@ ul {
 .controls {
   display: flex;
   justify-content: space-between;
+}
+
+.error {
+  margin-top: 2rem;
+}
+
+.error p {
+  text-align: center;
+  color: crimson;
+  text-transform: uppercase;
+  font-size: 1.125rem;
 }
 </style>
