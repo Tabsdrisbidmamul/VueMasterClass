@@ -23,7 +23,13 @@ const router = createRouter({
     { path: '/register', component: CoachRegistration },
     { path: '/requests', component: RequestsReceived },
     { path: '/:notFound(.*)', component: NotFound }
-  ]
+  ],
+  scrollBehavior(_, _2, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return { top: 0, left: 0 };
+  }
 });
 
 export default router;

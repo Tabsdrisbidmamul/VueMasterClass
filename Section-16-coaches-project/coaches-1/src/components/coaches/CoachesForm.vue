@@ -127,16 +127,15 @@ export default {
   methods: {
     clearValidity(input) {
       this[input].isValid = true;
-      this.validateForm();
     },
     validateForm() {
       this.formIsValid = true;
 
-      // this.firstName.isValid = true;
-      // this.lastName.isValid = true;
-      // this.description.isValid = true;
-      // this.rate.isValid = true;
-      // this.areas.isValid = true;
+      this.firstName.isValid = true;
+      this.lastName.isValid = true;
+      this.description.isValid = true;
+      this.rate.isValid = true;
+      this.areas.isValid = true;
 
       if (this.firstName.val === '') {
         this.firstName.isValid = false;
