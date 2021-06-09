@@ -49,3 +49,8 @@ In this section we go over the vue-router, which lets us to navigate around the 
 ## Section-14-Animations
 We look at how we can animate various parts of the application with CSS animations
 
+## Section-15-VueX
+Vuex is vue's state management, like Redux state management in React, Vue offers its own out of the box state management, so we move global state away from one component into the state managed and controlled area within the vue app
+
+## Section-16-Coaches-project
+This project brings together all the concepts that have been learnt thus far, routing, vuex, animations, HTTP-requests, forms and components and vue app structure. Overall a nice project to help you understand how vue projects work
