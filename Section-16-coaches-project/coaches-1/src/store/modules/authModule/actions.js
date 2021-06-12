@@ -61,7 +61,7 @@ export default {
     localStorage.setItem('tokenExpiration', expirationDate);
 
     timer = setTimeout(() => {
-      context.dispatch('logout');
+      context.dispatch('autoLogout');
     }, expiresIn);
 
     const credentials = {
@@ -85,7 +85,7 @@ export default {
     }
 
     timer = setTimeout(() => {
-      context.dispatch('logout');
+      context.dispatch('autoLogout');
     }, expiresIn);
 
     if (token && userId) {
