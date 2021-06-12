@@ -5,7 +5,10 @@ import mutations from './mutations';
 export default {
   state() {
     return {
-      userId: 'c3'
+      userId: null,
+      token: null,
+      tokenExpiration: null,
+      didAutoLogout: false
     };
   },
   mutations,

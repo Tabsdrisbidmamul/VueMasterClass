@@ -12,7 +12,10 @@
           <base-button @click="loadCoaches(true)" mode="outline"
             >Refresh</base-button
           >
-          <base-button link to="/register" v-if="!isCoach && !isLoading"
+          <base-button link to="/auth?redirect=register" v-if="login"
+            >Login to register as a Coach</base-button
+          >
+          <base-button link to="/register" v-if="register"
             >Register as a Coach</base-button
           >
         </div>
@@ -58,7 +61,14 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['token', 'isAuthenticated']),
     ...mapGetters('coaches', ['hasCoaches', 'coaches', 'isCoach']),
+    register() {
+      return this.isAuthenticated && !this.isCoach && !this.isLoading;
+    },
+    login() {
+      return !this.isAuthenticated;
+    },
     filteredCoaches() {
       return this.coaches.filter(coach => {
         if (this.activeFilters.frontend && coach.areas.includes('frontend')) {

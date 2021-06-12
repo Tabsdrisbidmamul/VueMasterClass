@@ -1,42 +1,56 @@
 <template>
-  <base-card>
-    <form @submit.prevent="submitForm">
-      <div class="form-control" :class="{ invalid: !email.isValid }">
-        <label for="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          v-model.trim="email.val"
-          @blur="clearValidity('email')"
-        />
-        <p class="errors" v-if="!email.isValid">Email must not be empty</p>
-      </div>
+  <section>
+    <base-dialog
+      :show="!!error"
+      title="Authentication failed"
+      @close="handleError"
+    >
+      <p>{{ error }}</p>
+    </base-dialog>
+    <base-dialog :show="isLoading" fixed title="Authenticating...">
+      <base-spinner></base-spinner>
+    </base-dialog>
+    <base-card v-if="!isLoading">
+      <form @submit.prevent="submitForm">
+        <div class="form-control" :class="{ invalid: !email.isValid }">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            v-model.trim="email.val"
+            @blur="clearValidity('email')"
+          />
+          <p class="errors" v-if="!email.isValid">Email must not be empty</p>
+        </div>
 
-      <div class="form-control" :class="{ invalid: !password.isValid }">
-        <label for="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          v-model.trim="password.val"
-          @blur="clearValidity('password')"
-        />
-        <p class="errors" v-if="!password.isValid">
-          Password must not be empty and must be 6 characters long
-        </p>
-      </div>
+        <div class="form-control" :class="{ invalid: !password.isValid }">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            v-model.trim="password.val"
+            @blur="clearValidity('password')"
+          />
+          <p class="errors" v-if="!password.isValid">
+            Password must not be empty and must be 6 characters long
+          </p>
+        </div>
 
-      <p v-if="!formIsValid">Please correct the above errors</p>
+        <p v-if="!formIsValid">Please correct the above errors</p>
 
-      <base-button>{{ submitButtonCaption }}</base-button>
-      <base-button type="button" mode="flat" @click="switchAuthMode">{{
-        switchAuthModeButtonCaption
-      }}</base-button>
-    </form>
-  </base-card>
+        <base-button>{{ submitButtonCaption }}</base-button>
+        <base-button type="button" mode="flat" @click="switchAuthMode">{{
+          switchAuthModeButtonCaption
+        }}</base-button>
+      </form>
+    </base-card>
+  </section>
 </template>
 
 <script>
+import BaseDialog from '../../components/UI/BaseDialog.vue';
 export default {
+  components: { BaseDialog },
   data() {
     return {
       email: {
@@ -48,7 +62,9 @@ export default {
         isValid: true
       },
       formIsValid: true,
-      authMode: 'login'
+      authMode: 'login',
+      isLoading: false,
+      error: null
     };
   },
   computed: {
@@ -60,6 +76,9 @@ export default {
     }
   },
   methods: {
+    handleError() {
+      this.error = null;
+    },
     clearValidity(input) {
       this[input].isValid = true;
     },
@@ -82,7 +101,7 @@ export default {
     switchAuthMode() {
       this.authMode = this.authMode === 'login' ? 'signup' : 'login';
     },
-    submitForm() {
+    async submitForm() {
       this.validateForm();
 
       if (!this.formIsValid) {
@@ -94,7 +113,23 @@ export default {
         password: this.password.val
       };
 
-      console.log(formData);
+      this.isLoading = true;
+      try {
+        if (this.authMode === 'login') {
+          await this.$store.dispatch('login', formData);
+        } else {
+          await this.$store.dispatch('signup', formData);
+        }
+        this.isLoading = false;
+        let redirect = '/coaches';
+        if (this.$route.query.redirect) {
+          redirect = `/${this.$route.query.redirect}`;
+        }
+        this.$router.replace(redirect);
+      } catch (e) {
+        this.isLoading = false;
+        this.error = `${e.message} 🙈` || 'Something went wrong 🙈';
+      }
     }
   }
 };

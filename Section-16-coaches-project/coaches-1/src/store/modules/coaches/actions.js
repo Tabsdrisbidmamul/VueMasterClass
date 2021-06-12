@@ -11,9 +11,11 @@ export default {
       areas: payload.areas
     };
 
+    const token = context.rootGetters.token;
+
     await axios
       .put(
-        `https://vue-http-demo-d2475-default-rtdb.firebaseio.com/coaches/${userId}.json`,
+        `https://vue-http-demo-d2475-default-rtdb.firebaseio.com/coaches/${userId}.json?auth=${token}`,
         coachData
       )
       .catch(e => {

@@ -8,6 +8,8 @@ import RequestsReceived from './pages/requests/RequestsReceived.vue';
 import UserAuth from './pages/auth/UserAuth.vue';
 import NotFound from './pages/NotFound.vue';
 
+import store from './store/index';
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -21,9 +23,17 @@ const router = createRouter({
         { path: 'contact', component: CoachContact } // /coaches/c1/contact
       ]
     },
-    { path: '/register', component: CoachRegistration },
-    { path: '/requests', component: RequestsReceived },
-    { path: '/auth', component: UserAuth },
+    {
+      path: '/register',
+      component: CoachRegistration,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/requests',
+      component: RequestsReceived,
+      meta: { requiresAuth: true }
+    },
+    { path: '/auth', component: UserAuth, meta: { requiresUnauth: false } },
     { path: '/:notFound(.*)', component: NotFound }
   ],
   scrollBehavior(_, _2, savedPosition) {
@@ -31,6 +41,16 @@ const router = createRouter({
       return savedPosition;
     }
     return { top: 0, left: 0 };
+  }
+});
+
+router.beforeEach((to, _, next) => {
+  if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
+    return next('/auth');
+  } else if (to.meta.requiresUnauth && store.getters.isAuthenticated) {
+    return next('/coaches');
+  } else {
+    return next();
   }
 });
 
