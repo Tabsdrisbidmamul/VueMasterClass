@@ -53,4 +53,8 @@ We look at how we can animate various parts of the application with CSS animatio
 Vuex is vue's state management, like Redux state management in React, Vue offers its own out of the box state management, so we move global state away from one component into the state managed and controlled area within the vue app
 
 ## Section-16-Coaches-project
-This project brings together all the concepts that have been learnt thus far, routing, vuex, animations, HTTP-requests, forms and components and vue app structure. Overall a nice project to help you understand how vue projects work
+This project brings together all the concepts that have been learnt thus far, routing, vuex, animations, HTTP-requests, forms and components and vue app structure. Overall a nice project to help you understand how vue projects work. In this section we also deploy the project to a static web host provider like Firebase to we can access the project from this URL: [Find a Coach](https://vue-http-demo-d2475.web.app/coaches)
+
+## Section-17-Composition-API
+We go over Composition API, where we primarily using the Options API throughout all previous projects, this time round we go over the biggest feature in Vue 3
+
