@@ -12,7 +12,7 @@
     <form @submit.prevent="addExpense">
       <div>
         <label for="amount">Amount</label>
-        <input id="amount" type="number" v-model="enteredExpense" />
+        <input id="amount" type="number" v-model.number="enteredExpense" />
       </div>
       <button>Add Expense</button>
     </form>
@@ -20,31 +20,60 @@
 </template>
 
 <script>
+import { ref, computed, watch } from 'vue';
+
 export default {
-  data() {
-    return {
-      availableFunds: 100,
-      currentExpenses: 0,
-      enteredExpense: 0,
+  setup() {
+    const availableFunds = ref(100);
+    const currentExpenses = ref(0);
+    const enteredExpense = ref(0);
+
+    const addExpense = () => {
+      currentExpenses.value += enteredExpense.value;
     };
-  },
-  computed: {
-    remainingFunds() {
-      return this.availableFunds - this.currentExpenses;
-    },
-  },
-  methods: {
-    addExpense() {
-      this.currentExpenses += this.enteredExpense;
-    },
-  },
-  watch: {
-    remainingFunds(val) {
+
+    const remainingFunds = computed(() => {
+      return availableFunds.value - currentExpenses.value;
+    });
+
+    watch(remainingFunds, val => {
       if (val < 0) {
         alert('You are broke!');
       }
-    },
-  },
+    });
+
+    return {
+      availableFunds,
+      currentExpenses,
+      enteredExpense,
+      remainingFunds,
+      addExpense
+    };
+  }
+  // data() {
+  //   return {
+  //     availableFunds: 100,
+  //     currentExpenses: 0,
+  //     enteredExpense: 0
+  //   };
+  // },
+  // computed: {
+  //   remainingFunds() {
+  //     return this.availableFunds - this.currentExpenses;
+  //   }
+  // },
+  // methods: {
+  //   addExpense() {
+  //     this.currentExpenses += this.enteredExpense;
+  //   }
+  // },
+  // watch: {
+  //   remainingFunds(val) {
+  //     if (val < 0) {
+  //       alert('You are broke!');
+  //     }
+  //   }
+  // }
 };
 </script>
 
