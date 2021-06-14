@@ -53,7 +53,7 @@ export default {
         throw new Error('Something went very wrong');
       });
 
-    const expiresIn = +res.data.tokenExpiration * 1000; // to ms
+    const expiresIn = +res.data.expiresIn * 1000; // to ms
     const expirationDate = new Date().getTime() + expiresIn;
 
     localStorage.setItem('token', res.data.idToken);
@@ -80,7 +80,7 @@ export default {
 
     const expiresIn = tokenExpiration - new Date().getTime();
 
-    if (expiresIn < 10000) {
+    if (expiresIn < 0) {
       return;
     }
 
