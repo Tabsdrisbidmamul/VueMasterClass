@@ -58,3 +58,5 @@ This project brings together all the concepts that have been learnt thus far, ro
 ## Section-17-Composition-API
 We go over Composition API, where we primarily using the Options API throughout all previous projects, this time round we go over the biggest feature in Vue 3
 
+## Section-18-Mixins-Composition-Functions
+In this section we go over how to resue logically related code across multiple components, for the options API its mixins and for the composition API its composition functionsS
