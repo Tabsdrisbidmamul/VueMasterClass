@@ -1,25 +1,33 @@
 <template>
   <section>
     <h2>{{ title }}</h2>
-    <h3>${{ price}}</h3>
-    <p>{{ description}}</p>
+    <h3>${{ price }}</h3>
+    <p>{{ description }}</p>
+    <router-link to="/products/p2">Product 2</router-link>
   </section>
 </template>
 
 <script>
-import { ref } from 'vue';
+import { computed, inject } from 'vue';
+// import { useRouter, useRoute } from 'vue-router';
 
 export default {
-  setup() {
-    const title = ref('');
-    const price = ref(null);
-    const description = ref('');
+  props: ['pid'],
+  setup(props) {
+    const products = inject('products');
+
+    const selectedItem = computed(() =>
+      products.value.find(product => product.id === props.pid)
+    );
+
+    const title = computed(() => selectedItem.value.title);
+    const price = computed(() => selectedItem.value.price);
+    const description = computed(() => selectedItem.value.description);
 
     return { title, price, description };
-  },
+  }
 };
 </script>
-
 
 <style scoped>
 section {
