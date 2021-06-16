@@ -45,7 +45,10 @@ export default {
       'fullName'
     );
 
-    const { sorting, displayedUsers, sort } = useSorting(availableItems);
+    const { sorting, displayedUsers, sort } = useSorting(
+      availableItems,
+      'fullName'
+    );
 
     return {
       enteredSearchTerm,
